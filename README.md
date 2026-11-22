@@ -2,6 +2,10 @@
 
 Typed, blocking Rust clients for 7 open world-watch feeds (RSS/Atom news, armed-conflict events, maritime chokepoint transits, federal contract awards, WARN layoff notices, large on-chain transfers and arXiv research velocity), so you can monitor what is happening without writing a scraper per source.
 
+![Terminal output of the situationapi-ucdp showcase example: UCDP conflict events and fatalities by country, decoded from the crate's synthetic test fixture](docs/showcase/ucdp-terminal.png)
+
+The image is the output of `cargo run -p situationapi-ucdp --example showcase`: the example decodes the crate's own synthetic test fixture (the real upstream layout, invented values) through the public API, offline. Reproduce it with `docs/showcase/make-screenshots.sh` (see [docs/showcase.md](docs/showcase.md)).
+
 ## Install
 
 These crates are not on crates.io. Add the one you need as a git dependency:

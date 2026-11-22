@@ -1,0 +1,4 @@
+UCDP synthetic sample
+Country                    Events   Fatalities
+Example Republic                2            6
+Sample Federation               1            0
