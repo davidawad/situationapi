@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <entry><id>https://arxiv.org/abs/synthetic.1</id><published>2026-11-21T12:00:00Z</published><category term="cs.AI"/><category term="cs.LG"/><summary>Synthetic abstract for an offline parser check.</summary></entry>
+  <entry><id>https://arxiv.org/abs/synthetic.2</id><published>2026-11-20T12:00:00Z</published><category term="stat.ML"/><summary>Another invented abstract used to verify the Atom entry structure.</summary></entry>
+</feed>

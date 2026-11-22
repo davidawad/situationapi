@@ -1,0 +1,4 @@
+id,state,company,company_canonical,company_dba,location,employees_affected,notice_date,effective_date,notice_type,first_seen
+fixture-a,NJ,Example Works,Example Works,,Metuchen,37,2026-11-02,2027-01-04,Mass layoff,2026-11-03T00:00:00Z
+fixture-b,CA,Sample Fabrication,Sample Fabrication,,Oakland,19,2026-10-21,2027-01-05,Company closure,2026-10-22T00:00:00Z
+fixture-c,NY,Undated Example,Undated Example,,Albany,11,,2027-01-06,Mass layoff,2026-11-03T00:00:00Z

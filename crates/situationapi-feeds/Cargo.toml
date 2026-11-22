@@ -1,0 +1,24 @@
+[package]
+name = "situationapi-feeds"
+version = "0.1.0"
+edition.workspace = true
+license = "GPL-3.0-or-later"
+publish = false
+description = "Reusable conditional RSS and Atom feed client"
+
+[lib]
+name = "situationapi_feeds"
+path = "src/lib.rs"
+
+[lints]
+workspace = true
+
+[dependencies]
+feed-rs = "2.4"
+reqwest = { version = "0.12", default-features = false, features = ["blocking", "rustls-tls"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+
+[dev-dependencies]
+tempfile = "3"

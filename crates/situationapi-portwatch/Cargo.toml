@@ -1,0 +1,18 @@
+[package]
+name = "situationapi-portwatch"
+version = "0.1.0"
+edition.workspace = true
+license = "GPL-3.0-or-later"
+publish = false
+description = "Reusable client for bounded IMF PortWatch chokepoint queries"
+
+[lints]
+workspace = true
+
+[dependencies]
+chrono = "0.4"
+rand = "0.9"
+reqwest = { version = "0.12", default-features = false, features = ["blocking", "json", "rustls-tls"] }
+serde_json = "1"
+sha2 = "0.10"
+thiserror = "2"

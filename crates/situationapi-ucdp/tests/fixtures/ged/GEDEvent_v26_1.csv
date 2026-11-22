@@ -1,0 +1,3 @@
+id,country_id,country,date_end,best,conflict_new_id,active_year
+901,987,Example Republic,2026-11-02,4,9901,true
+902,654,Sample Federation,2026-10-19,0,9902,false
