@@ -2,7 +2,7 @@
 
 Typed, blocking Rust clients for 7 open world-watch feeds (RSS/Atom news, armed-conflict events, maritime chokepoint transits, federal contract awards, WARN layoff notices, large on-chain transfers and arXiv research velocity), so you can monitor what is happening without writing a scraper per source.
 
-![Terminal output of the situationapi-ucdp showcase example: UCDP conflict events and fatalities by country, decoded from the crate's synthetic test fixture](docs/showcase/ucdp-terminal.png)
+![Terminal output of the situationapi-ucdp showcase example: UCDP conflict events and fatalities by country, decoded from the crate's synthetic test fixture](docs/showcase/situationapi-ucdp.png)
 
 The image is the output of `cargo run -p situationapi-ucdp --example showcase`: the example decodes the crate's own synthetic test fixture (the real upstream layout, invented values) through the public API, offline. Reproduce it with `docs/showcase/make-screenshots.sh` (see [docs/showcase.md](docs/showcase.md)).
 
@@ -34,6 +34,10 @@ Build everything: `cargo build --workspace`. The offline tests need no network o
 Every crate README has a usage example (mirrored by `examples/basic.rs`), the endpoints or files it covers, how authentication works, and a terms table (automated access, redistribution, attribution, rate limits) with links to the upstream terms as reviewed. Test fixtures keep each upstream's layout but carry synthesized values, except trimmed US federal public-domain samples.
 
 This project is not affiliated with or endorsed by any of the data providers. Using a client does not change a provider's terms: check them before you redistribute data.
+
+## Prior art
+
+For arXiv we use the maintained [`arxiv-client`](https://crates.io/crates/arxiv-client) crate instead of shipping our own (reviewed 2026-11-26). `mempool_space` was reviewed and not adopted: its last release is from 2024 and it does not cover the endpoints used here.
 
 ## License
 

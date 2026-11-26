@@ -1,0 +1,4 @@
+Mempool synthetic sample
+Asset      >$1m   >$10m    Largest USD
+BTC           2       1       10100000
+ETH           2       1       20000000

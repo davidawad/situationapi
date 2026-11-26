@@ -1,0 +1,4 @@
+PortWatch synthetic sample
+Date       Passage            Count Capacity
+2036-03-17 Synthetic Passage     14      100
+2035-03-18 Synthetic Passage     21      120

@@ -1,0 +1,4 @@
+GDELT synthetic sample
+Date             Headline                           Count
+20361126120000   Synthetic market update                2
+20361126090000   Synthetic port report                  2

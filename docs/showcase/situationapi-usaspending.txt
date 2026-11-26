@@ -1,0 +1,5 @@
+USAspending synthetic sample
+Kind       Label                        Amount
+Agency     ZZ                          1842.75
+Award      SYNTHETIC-0001              3210.50
+Geography  ZZ001                        745.25

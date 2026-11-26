@@ -1,0 +1,5 @@
+WARN synthetic sample
+State  Company                Workers
+NJ     Example Works               37
+CA     Sample Fabrication          19
+NY     Undated Example             11
