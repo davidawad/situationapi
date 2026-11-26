@@ -113,15 +113,22 @@ impl Client {
     ///
     /// Returns an error when a release cannot be downloaded, cached, or decoded.
     pub fn fetch(&self, policy: CachePolicy) -> Result<Dataset, Error> {
-        let ged = self.get_release(GED_URL, policy)?;
-        let candidate = self.get_release(CANDIDATE_URL, policy)?;
+        let ged = self.get_release(GED_URL, policy, extract_ged_member)?;
+        let candidate = self.get_release(CANDIDATE_URL, policy, |bytes| Ok(bytes.to_vec()))?;
         Ok(Dataset {
-            ged: decode_ged_zip(&ged)?,
+            ged: decode_candidate_csv(&ged)?,
             candidate: decode_candidate_csv(&candidate)?,
         })
     }
 
-    fn get_release(&self, url: &str, policy: CachePolicy) -> Result<Vec<u8>, Error> {
+    /// Returns the release's extract. `extract` runs on the downloaded bytes before anything
+    /// is cached, so a bulk archive is never written to disk; only the extract is.
+    fn get_release(
+        &self,
+        url: &str,
+        policy: CachePolicy,
+        extract: impl Fn(&[u8]) -> Result<Vec<u8>, Error>,
+    ) -> Result<Vec<u8>, Error> {
         let cached_path = self.cache_dir.as_ref().map(|directory| {
             let key = format!("{:x}", Sha256::digest(url.as_bytes()));
             directory.join(key)
@@ -148,7 +155,7 @@ impl Client {
         if policy == CachePolicy::Offline {
             return Err(Error::OfflineMiss(url.to_owned()));
         }
-        let bytes = self.download(url)?;
+        let bytes = extract(&self.download(url)?)?;
         if let Some(path) = cached_path {
             let parent = path
                 .parent()
@@ -202,6 +209,22 @@ impl Client {
         }
         Err(last_error.unwrap_or_else(|| Error::Decode("download attempts exhausted".to_owned())))
     }
+}
+
+/// Extract the named GED CSV member from an upstream ZIP release.
+///
+/// # Errors
+///
+/// Returns an error if the archive is invalid or lacks the expected member.
+pub fn extract_ged_member(bytes: &[u8]) -> Result<Vec<u8>, Error> {
+    let mut archive =
+        ZipArchive::new(Cursor::new(bytes)).map_err(|error| Error::Decode(error.to_string()))?;
+    let mut member = archive
+        .by_name(GED_MEMBER)
+        .map_err(|error| Error::Decode(error.to_string()))?;
+    let mut csv = Vec::new();
+    member.read_to_end(&mut csv)?;
+    Ok(csv)
 }
 
 /// Decode the named GED CSV member from an upstream ZIP release.
@@ -300,6 +323,16 @@ mod tests {
         let events = decode_ged_zip(GED_ZIP).expect("synthetic GED archive decodes");
         assert_eq!(events.len(), 2);
         assert_eq!(events[1].country_id, "654");
+    }
+
+    #[test]
+    fn extracted_member_decodes_without_the_archive() {
+        let csv = extract_ged_member(GED_ZIP).expect("member extracts");
+        assert!(
+            !csv.starts_with(b"PK"),
+            "extract is the CSV, not the archive"
+        );
+        assert_eq!(decode_candidate_csv(&csv).expect("csv decodes").len(), 2);
     }
 
     #[test]

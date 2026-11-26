@@ -1,4 +1,4 @@
-//! Reusable blocking clients for mempool.space large-transfer queries.
+//! Reusable blocking clients for the APIs used by the situation-whales feed.
 use reqwest::blocking::Client as HttpClient;
 use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
@@ -30,7 +30,7 @@ pub enum Error {
     Decode(String),
 }
 
-/// Transfer totals at two caller-chosen thresholds.
+/// Transfer totals at the two thresholds used by the situation-whales adapter.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct TransferSummary {
     /// Counts for values over $1m and $10m USD.
