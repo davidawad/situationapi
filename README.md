@@ -25,6 +25,7 @@ Build everything: `cargo build --workspace`. The offline tests need no network o
 | --- | --- | --- |
 | `situationapi-arxiv` | Reusable blocking Rust client for the arXiv Atom API | [README](crates/situationapi-arxiv/README.md) |
 | `situationapi-feeds` | Reusable conditional RSS and Atom feed client | [README](crates/situationapi-feeds/README.md) |
+| `situationapi-gdelt-doc` | Reusable GDELT DOC 2.0 article-list client | [README](crates/situationapi-gdelt-doc/README.md) |
 | `situationapi-mempool` | Reusable blocking clients for public blockchain data APIs | [README](crates/situationapi-mempool/README.md) |
 | `situationapi-portwatch` | Reusable client for bounded IMF PortWatch chokepoint queries | [README](crates/situationapi-portwatch/README.md) |
 | `situationapi-ucdp` | Reusable Rust client for UCDP GED and Candidate event data | [README](crates/situationapi-ucdp/README.md) |
