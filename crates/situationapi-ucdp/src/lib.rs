@@ -42,10 +42,14 @@ pub enum Error {
 /// A decoded UCDP event row containing fields used by common consumers.
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Event {
+    /// Persistent UCDP event identifier.
+    pub id: String,
     /// Gleditsch–Ward numeric country identifier used by GED.
     pub country_id: String,
     /// Country label, when included in the release.
     pub country: Option<String>,
+    /// Event start date in the upstream `YYYY-MM-DD` layout.
+    pub date_start: Option<String>,
     /// Event end date in the upstream `YYYY-MM-DD` layout.
     pub date_end: String,
     /// Best estimate of direct fatalities; malformed or missing values decode as zero.
@@ -54,6 +58,14 @@ pub struct Event {
     pub conflict_new_id: Option<String>,
     /// Whether the conflict was active during the release year.
     pub active_year: bool,
+    /// Coded type of violence, when included in the release.
+    pub type_of_violence: Option<String>,
+    /// Coded actors and location fields used for event titles and geography.
+    pub side_a: Option<String>,
+    pub side_b: Option<String>,
+    pub where_description: Option<String>,
+    pub admin1: Option<String>,
+    pub admin2: Option<String>,
 }
 
 /// The two event collections consumed by the situation adapter.
@@ -266,6 +278,20 @@ fn decode_csv(reader: impl Read) -> Result<Vec<Event>, Error> {
     let date_end = column("date_end")?;
     let best = column("best")?;
     let country = headers.iter().position(|header| header == "country");
+    let id = headers.iter().position(|header| header == "id");
+    let relid = headers.iter().position(|header| header == "relid");
+    let date_start = headers.iter().position(|header| header == "date_start");
+    let type_of_violence = headers
+        .iter()
+        .position(|header| header == "type_of_violence");
+    let side_a = headers.iter().position(|header| header == "side_a");
+    let side_b = headers.iter().position(|header| header == "side_b");
+    let where_description = headers
+        .iter()
+        .position(|header| header == "where_description")
+        .or_else(|| headers.iter().position(|header| header == "where"));
+    let admin1 = headers.iter().position(|header| header == "adm_1");
+    let admin2 = headers.iter().position(|header| header == "adm_2");
     let conflict = headers
         .iter()
         .position(|header| header == "conflict_new_id");
@@ -274,8 +300,18 @@ fn decode_csv(reader: impl Read) -> Result<Vec<Event>, Error> {
         .map(|row| {
             let row = row.map_err(|error| Error::Decode(error.to_string()))?;
             Ok(Event {
+                id: id
+                    .and_then(|index| row.get(index))
+                    .filter(|value| !value.is_empty())
+                    .or_else(|| relid.and_then(|index| row.get(index)))
+                    .unwrap_or_default()
+                    .to_owned(),
                 country_id: row.get(country_id).unwrap_or_default().to_owned(),
                 country: country.and_then(|index| row.get(index)).map(str::to_owned),
+                date_start: date_start
+                    .and_then(|index| row.get(index))
+                    .filter(|value| !value.is_empty())
+                    .map(str::to_owned),
                 date_end: row.get(date_end).unwrap_or_default().to_owned(),
                 best: row.get(best).unwrap_or_default().parse().unwrap_or(0),
                 conflict_new_id: conflict
@@ -283,6 +319,30 @@ fn decode_csv(reader: impl Read) -> Result<Vec<Event>, Error> {
                     .filter(|value| !value.is_empty())
                     .map(str::to_owned),
                 active_year: active.and_then(|index| row.get(index)) == Some("true"),
+                type_of_violence: type_of_violence
+                    .and_then(|index| row.get(index))
+                    .filter(|value| !value.is_empty())
+                    .map(str::to_owned),
+                side_a: side_a
+                    .and_then(|index| row.get(index))
+                    .filter(|value| !value.is_empty())
+                    .map(str::to_owned),
+                side_b: side_b
+                    .and_then(|index| row.get(index))
+                    .filter(|value| !value.is_empty())
+                    .map(str::to_owned),
+                where_description: where_description
+                    .and_then(|index| row.get(index))
+                    .filter(|value| !value.is_empty())
+                    .map(str::to_owned),
+                admin1: admin1
+                    .and_then(|index| row.get(index))
+                    .filter(|value| !value.is_empty())
+                    .map(str::to_owned),
+                admin2: admin2
+                    .and_then(|index| row.get(index))
+                    .filter(|value| !value.is_empty())
+                    .map(str::to_owned),
             })
         })
         .collect()

@@ -53,3 +53,4 @@ Retries use exponential backoff with jitter for 429, 5xx, and transport errors. 
 | Rate limits | No numeric limit is published in the official endpoint documentation. The client backs off on 429 and server errors. |
 
 Sources: [USAspending API](https://api.usaspending.gov/), [endpoint documentation](https://api.usaspending.gov/docs/endpoints), and [data information and reuse terms](https://www.usaspending.gov/db_info). The API is a U.S. federal source.
+

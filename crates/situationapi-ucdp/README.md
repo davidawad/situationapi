@@ -54,3 +54,4 @@ Offline tests use synthesized rows with the upstream GED and Candidate CSV colum
 cargo test -p situationapi-ucdp
 cargo test -p situationapi-ucdp -- --ignored
 ```
+

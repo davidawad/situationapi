@@ -42,3 +42,9 @@ The underlying official listings are public records, but state-specific page ter
 | [Washington ESD WARN page](https://esd.wa.gov/employer-requirements/layoffs-and-employee-notifications/worker-adjustment-and-retraining-notification-warn-layoff-and-closure-database) | Not accessed directly; database page is an official listing. | No separate data license stated on the cited page. | No page-level attribution rule stated. | No page-level request limit stated. |
 
 The WARN Feed README says its source records originate from state labor department listings, and its dataset license permits use for any purpose with credit. It also says the upstream is unaffiliated with the agencies and recommends checking original records for consequential decisions. The source collector is Apache-2.0, but this client does not incorporate its software. Terms were checked on 2026-11-22; re-check them before changing the endpoint or fetching state sites directly.
+
+
+## DECIDED
+
+- Keep state aggregation and adapter/v1 records in `situation-warn`; move the network request, cache, retries, CSV decoding, and transport errors into this independent client because that is the reusable upstream protocol boundary.
+- Use the consolidated WARN Feed CSV because it publishes a keyless daily source and explicitly licenses its dataset CC BY 4.0 with attribution; no state page is requested directly.

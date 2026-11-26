@@ -48,3 +48,4 @@ Reviewed the [mempool.space REST API documentation](https://mempool.space/docs/a
 | Rate limits | Enforced; numeric limits are unpublished. Excess returns HTTP 429, and repeated excess may result in a ban. |
 
 The client honors rate limits with bounded retries for transient errors. Avoid high-volume use; repeated 429s should be treated as a stop signal. This crate also calls the public keyless [PublicNode JSON-RPC](https://ethereum-rpc.publicnode.com) and [Coinbase spot-price endpoint](https://api.coinbase.com/v2/prices/ETH-USD/spot); consult those services' own terms for their requests.
+

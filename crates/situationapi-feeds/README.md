@@ -31,7 +31,7 @@ The same example is in [`examples/basic.rs`](examples/basic.rs). No API key is n
 
 ## Coverage
 
-The client fetches generic RSS 2.0 and Atom documents by HTTP GET. It parses titles, alternate links, and publication/update timestamps, and supports ETag and Last-Modified conditional requests. It does not include publisher catalogs or publisher-specific endpoints; it ships no feed catalog.
+The client fetches generic RSS 2.0 and Atom documents by HTTP GET. It parses titles, alternate links, and publication/update timestamps, and supports ETag and Last-Modified conditional requests. It does not include publisher catalogs or publisher-specific endpoints; the curated feed catalog remains in `situation-rss`.
 
 ## Terms
 
@@ -44,4 +44,5 @@ Feed terms belong to each publisher. Check the feed's current terms before use. 
 | Attribution required? | Preserve publisher attribution and links; BBC RSS use requires attribution and a link to BBC News. |
 | Rate limits | No common RSS standard rate limit. Follow each publisher's limits and caching guidance; this client conditionally revalidates and defaults to a ten-minute cache floor. |
 
-Terms reviewed 2026-11-22: [BBC Terms of Use, metadata and RSS feeds](https://www.bbc.co.uk/usingthebbc/terms-of-use/), [BBC News Feeds](https://operations.bbc.co.uk/platform/feeds/NewsFeeds.htm), and [Le Monde RSS terms](https://www.lemonde.fr/en/about-us/article/2026/03/27/le-monde-rss-feeds_6751860_115.html). The generic client is suitable only where the chosen publisher permits the intended access and display. Any feed catalog must be checked against each publisher's terms before operational use.
+Terms reviewed 2026-11-22: [BBC Terms of Use, metadata and RSS feeds](https://www.bbc.co.uk/usingthebbc/terms-of-use/), [BBC News Feeds](https://operations.bbc.co.uk/platform/feeds/NewsFeeds.htm), and [Le Monde RSS terms](https://www.lemonde.fr/en/about-us/article/2026/03/27/le-monde-rss-feeds_6751860_115.html). The generic client is suitable only where the chosen publisher permits the intended access and display. The current `situation-rss` catalog must be checked against each publisher's terms before operational use.
+
